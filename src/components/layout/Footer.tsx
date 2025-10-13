@@ -1,4 +1,5 @@
 import { Waves } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { cities } from '@/data/mockData';
 
 const Footer = () => {
@@ -50,6 +51,14 @@ const Footer = () => {
               Informações precisas de tábua de marés para turistas e 
               moradores das principais cidades litorâneas do Brasil.
             </p>
+            <div className="mt-4">
+              <Link 
+                to="/politica-de-privacidade" 
+                className="text-sm text-muted-foreground hover:text-primary transition-colors inline-block mb-2"
+              >
+                Política de Privacidade
+              </Link>
+            </div>
             <p className="text-xs text-muted-foreground mt-4">
               © {currentYear} Tábua de Marés. Todos os direitos reservados.
             </p>
