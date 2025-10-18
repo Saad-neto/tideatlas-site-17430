@@ -29,7 +29,7 @@ const SEO = ({ city, type = 'city' }: SEOProps) => {
   ].join(', ');
 
   // URL canônica
-  const canonicalUrl = `https://tabuademares.com.br/tabuada-mares/${city.slug}`;
+  const canonicalUrl = `https://tabuademare.site/tabuada-mares/${city.slug}`;
 
   // Open Graph image (pode ser customizada depois)
   const ogImage = 'https://lovable.dev/opengraph-image-p98pqg.png';
@@ -41,8 +41,8 @@ const SEO = ({ city, type = 'city' }: SEOProps) => {
       // WebSite schema
       {
         "@type": "WebSite",
-        "@id": "https://tabuademares.com.br/#website",
-        "url": "https://tabuademares.com.br/",
+        "@id": "https://tabuademare.site/#website",
+        "url": "https://tabuademare.site/",
         "name": "Tábua de Marés Brasil",
         "description": "Consulte a tábua de marés de todas as principais cidades costeiras do Brasil",
         "inLanguage": "pt-BR"
@@ -56,7 +56,7 @@ const SEO = ({ city, type = 'city' }: SEOProps) => {
         "description": description,
         "inLanguage": "pt-BR",
         "isPartOf": {
-          "@id": "https://tabuademares.com.br/#website"
+          "@id": "https://tabuademare.site/#website"
         }
       },
       // Place schema (cidade)
@@ -79,7 +79,7 @@ const SEO = ({ city, type = 'city' }: SEOProps) => {
       {
         "@type": "Organization",
         "name": "Tábua de Marés Brasil",
-        "url": "https://tabuademares.com.br/",
+        "url": "https://tabuademare.site/",
         "logo": {
           "@type": "ImageObject",
           "url": ogImage

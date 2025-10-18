@@ -24,7 +24,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://tabuademares.com.br/sitemap.xml
+Sitemap: https://tabuademare.site/sitemap.xml
 
 # Crawl delay (evita sobrecarga do servidor)
 Crawl-delay: 1
