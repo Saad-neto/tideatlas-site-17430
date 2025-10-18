@@ -1,6 +1,6 @@
 import { Waves } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { cities } from '@/data/mockData';
+import { cities } from '@/data/cities';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -18,7 +18,7 @@ const Footer = () => {
               </h3>
             </div>
             <p className="text-sm text-muted-foreground mb-4">
-              Seu guia completo para turismo nas praias brasileiras. 
+              Seu guia completo para turismo nas praias brasileiras.
               Consulte horários de marés, previsão do tempo e muito mais.
             </p>
           </div>
@@ -29,14 +29,14 @@ const Footer = () => {
               Principais Cidades
             </h4>
             <ul className="grid grid-cols-2 gap-2">
-              {cities.map((city) => (
-                <li key={city}>
-                  <a
-                    href={`#${city.toLowerCase().replace(/\s+/g, '-')}`}
+              {cities.slice(0, 12).map((city) => (
+                <li key={city.id}>
+                  <Link
+                    to={`/tabuada-mares/${city.slug}`}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
-                    {city}
-                  </a>
+                    {city.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -48,12 +48,12 @@ const Footer = () => {
               Sobre
             </h4>
             <p className="text-sm text-muted-foreground mb-2">
-              Informações precisas de tábua de marés para turistas e 
+              Informações precisas de tábua de marés para turistas e
               moradores das principais cidades litorâneas do Brasil.
             </p>
             <div className="mt-4">
-              <Link 
-                to="/politica-de-privacidade" 
+              <Link
+                to="/politica-de-privacidade"
                 className="text-sm text-muted-foreground hover:text-primary transition-colors inline-block mb-2"
               >
                 Política de Privacidade

@@ -1,6 +1,14 @@
-import { Waves } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Waves, MapPin } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { formatDate } from '@/lib/utils';
+import { cities } from '@/data/cities';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface HeaderProps {
   cityName: string;
@@ -9,6 +17,18 @@ interface HeaderProps {
 
 const Header = ({ cityName, cityState }: HeaderProps) => {
   const currentDate = formatDate();
+  const navigate = useNavigate();
+
+  const currentCity = cities.find(
+    city => city.name === cityName && city.stateCode === cityState
+  );
+
+  const handleCityChange = (cityId: string) => {
+    const selectedCity = cities.find(city => city.id === cityId);
+    if (selectedCity) {
+      navigate(`/tabuada-mares/${selectedCity.slug}`);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-card border-b border-border shadow-sm">
@@ -25,7 +45,7 @@ const Header = ({ cityName, cityState }: HeaderProps) => {
               </p>
             </div>
           </Link>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4">
             <nav className="hidden sm:flex gap-6">
               <Link to="/" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
                 Início
@@ -34,10 +54,22 @@ const Header = ({ cityName, cityState }: HeaderProps) => {
                 Sobre
               </Link>
             </nav>
-            <div className="text-center sm:text-right">
-              <p className="text-lg font-semibold text-primary">
-                {cityName}/{cityState}
-              </p>
+            <div className="flex items-center gap-3">
+              <MapPin className="w-5 h-5 text-primary hidden sm:block" />
+              <Select value={currentCity?.id} onValueChange={handleCityChange}>
+                <SelectTrigger className="w-[180px] sm:w-[200px]">
+                  <SelectValue placeholder="Selecione a cidade" />
+                </SelectTrigger>
+                <SelectContent>
+                  {cities.map((city) => (
+                    <SelectItem key={city.id} value={city.id}>
+                      {city.name}/{city.stateCode}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="hidden lg:block text-right">
               <p className="text-sm text-muted-foreground capitalize">
                 {currentDate}
               </p>

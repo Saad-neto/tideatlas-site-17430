@@ -47,7 +47,15 @@ export const nearbyBeaches = [
 
 // Lista de cidades para o footer
 export const cities = [
-  'João Pessoa', 'Natal', 'Recife', 'Salvador',
-  'Fortaleza', 'Rio de Janeiro', 'Florianópolis',
-  'Santos', 'Guarujá', 'Vitória'
+  // Norte
+  'Belém', 'Macapá', 'Salinópolis',
+  // Nordeste
+  'São Luís', 'Fortaleza', 'Natal', 'João Pessoa', 'Recife',
+  'Maceió', 'Aracaju', 'Salvador', 'Ilhéus',
+  // Sudeste
+  'Vitória', 'Rio de Janeiro', 'Angra dos Reis', 'Santos',
+  'Guarujá', 'Ubatuba',
+  // Sul
+  'Paranaguá', 'Florianópolis', 'Balneário Camboriú',
+  'Tramandaí', 'Torres'
 ];

@@ -1,73 +1,165 @@
-# Welcome to your Lovable project
+# 🌊 Tábua de Marés Brasil
 
-## Project info
+Aplicação web moderna para consultar tábua de marés de 22 cidades costeiras brasileiras com calendário lunar e monetização via Google AdSense.
 
-**URL**: https://lovable.dev/projects/912d94fd-3752-49fe-9b13-ce1f655661de
+![Version](https://img.shields.io/badge/version-0.6.0-blue)
+![Build](https://img.shields.io/badge/build-passing-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-## How can I edit this code?
+## ✨ Funcionalidades
 
-There are several ways of editing your application.
+### 🌊 Dados de Marés
+- ✅ **22 cidades costeiras** (Norte, Nordeste, Sudeste, Sul)
+- ✅ **Tábua de marés do dia** (4 eventos: 2 altas + 2 baixas)
+- ✅ **Previsão de 7 dias** (accordion expansível)
+- ✅ **APIs reais suportadas:**
+  - Stormglass.io (50 requests/dia grátis)
+  - WorldTides ($0.01/request)
+  - Dados mockados (fallback automático)
 
-**Use Lovable**
+### 🌙 Calendário Lunar
+- ✅ **Fase atual da lua** com iluminação e emoji
+- ✅ **Próximas 8 fases** da lua
+- ✅ **Indicador de marés de sizígia** (lua cheia/nova)
+- ✅ **Influência lunar nas marés** explicada
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/912d94fd-3752-49fe-9b13-ce1f655661de) and start prompting.
+### 🔍 SEO Otimizado
+- ✅ **Meta tags dinâmicas** por cidade
+- ✅ **Open Graph** e Twitter Cards
+- ✅ **Sitemap.xml** com 22 cidades
+- ✅ **Schema.org JSON-LD** para rich snippets
+- ✅ **Conteúdo SEO** (FAQ, dicas de pesca/surf)
 
-Changes made via Lovable will be committed automatically to this repo.
+### 🎨 UI/UX
+- ✅ **Design responsivo** (mobile-first)
+- ✅ **Loading states** com skeleton screens
+- ✅ **Sistema de cache** (60 min padrão)
+- ✅ **Formatação em português** (date-fns)
 
-**Use your preferred IDE**
+## 🚀 Começando
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Pré-requisitos
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- Node.js 18+
+- npm ou yarn
 
-Follow these steps:
+### Instalação
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+```bash
+# Clone o repositório
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Entre no diretório
+cd adsense_tabuade_mares
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Instale as dependências
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+# Copie o arquivo de exemplo
+cp .env.example .env
 ```
 
-**Edit a file directly in GitHub**
+### Configuração
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Edite o arquivo `.env`:
 
-**Use GitHub Codespaces**
+```env
+# Para usar dados mockados (padrão)
+VITE_TIDE_PROVIDER=mock
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Para usar API real (ver API_SETUP.md)
+VITE_TIDE_PROVIDER=stormglass
+VITE_STORMGLASS_API_KEY=sua-api-key-aqui
+VITE_CACHE_DURATION=120
+```
 
-## What technologies are used for this project?
+📖 **Guia completo:** [API_SETUP.md](./API_SETUP.md)
 
-This project is built with:
+### Rodando o projeto
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```bash
+# Desenvolvimento
+npm run dev
 
-## How can I deploy this project?
+# Build para produção
+npm run build
 
-Simply open [Lovable](https://lovable.dev/projects/912d94fd-3752-49fe-9b13-ce1f655661de) and click on Share -> Publish.
+# Preview do build
+npm run preview
+```
 
-## Can I connect a custom domain to my Lovable project?
+## 📦 Stack Tecnológica
 
-Yes, you can!
+- **Frontend:** React 18 + TypeScript
+- **Build:** Vite 5
+- **UI:** shadcn/ui (Radix UI)
+- **Styling:** Tailwind CSS
+- **Routing:** React Router v6
+- **Data:** date-fns, React Query
+- **APIs:** Stormglass.io, WorldTides
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 🌍 Cidades Cobertas
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+### Norte (3)
+- Belém/PA, Macapá/AP, Salinópolis/PA
+
+### Nordeste (9)
+- São Luís/MA, Fortaleza/CE, Natal/RN, João Pessoa/PB, Recife/PE, Maceió/AL, Aracaju/SE, Salvador/BA, Ilhéus/BA
+
+### Sudeste (6)
+- Vitória/ES, Rio de Janeiro/RJ, Angra dos Reis/RJ, Santos/SP, Guarujá/SP, Ubatuba/SP
+
+### Sul (4)
+- Paranaguá/PR, Florianópolis/SC, Balneário Camboriú/SC, Tramandaí/RS, Torres/RS
+
+## 📊 Performance
+
+- **Bundle size:** 469KB (gzip: 146KB)
+- **Cache TTL:** 60-120 min (configurável)
+- **API requests:** ~10-15/dia (com cache)
+
+## 🗺️ Roadmap
+
+- [x] Sistema de rotas dinâmicas
+- [x] Dados de marés (mock + APIs reais)
+- [x] Calendário lunar
+- [x] SEO completo
+- [ ] Google AdSense
+- [ ] Google Analytics
+- [ ] Gráficos de altura das marés
+- [ ] PWA / Service Worker
+
+Ver [ROADMAP.md](./ROADMAP.md) completo.
+
+## 📄 Documentação
+
+- [API_SETUP.md](./API_SETUP.md) - Configurar APIs de marés
+- [ROADMAP.md](./ROADMAP.md) - Planejamento completo
+
+## 🚀 Deploy
+
+### Via Lovable
+
+Abra o [Lovable Project](https://lovable.dev/projects/912d94fd-3752-49fe-9b13-ce1f655661de) e clique em Share → Publish.
+
+### Via Vercel/Netlify
+
+Configure as variáveis de ambiente no dashboard e faça deploy do repositório.
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Abra uma issue ou pull request.
+
+## 📝 Licença
+
+MIT
+
+## 🙏 Agradecimentos
+
+- [Stormglass.io](https://stormglass.io/) - API de marés gratuita
+- [WorldTides](https://www.worldtides.info/) - API de marés precisa
+- [shadcn/ui](https://ui.shadcn.com/) - Componentes React lindos
+
+---
+
+**Desenvolvido com ❤️ para a comunidade náutica brasileira 🇧🇷**

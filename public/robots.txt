@@ -1,14 +1,30 @@
+# robots.txt - Tábua de Marés Brasil
+# Permite indexação de todo o conteúdo para melhor visibilidade em motores de busca
+
+# Google bots
 User-agent: Googlebot
 Allow: /
 
+User-agent: Googlebot-Image
+Allow: /
+
+# Bing bot
 User-agent: Bingbot
 Allow: /
 
+# Social media crawlers
 User-agent: Twitterbot
 Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
 
+# Permite todos os outros crawlers
 User-agent: *
 Allow: /
+
+# Sitemap location
+Sitemap: https://tabuademares.com.br/sitemap.xml
+
+# Crawl delay (evita sobrecarga do servidor)
+Crawl-delay: 1
