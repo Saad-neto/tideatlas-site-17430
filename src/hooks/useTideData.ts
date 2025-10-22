@@ -13,7 +13,11 @@ interface UseTideDataResult {
   refetch: () => void;
 }
 
-export function useTideData(city: City | undefined, days: number = 7): UseTideDataResult {
+export function useTideData(
+  city: City | undefined,
+  days: number = 7,
+  startDate?: Date
+): UseTideDataResult {
   const [forecast, setForecast] = useState<TideForecast | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -29,7 +33,7 @@ export function useTideData(city: City | undefined, days: number = 7): UseTideDa
     setError(null);
 
     try {
-      const response = await tideService.getTideForecast(city, days);
+      const response = await tideService.getTideForecast(city, days, startDate);
 
       if (response.success && response.data) {
         setForecast(response.data);
@@ -49,7 +53,8 @@ export function useTideData(city: City | undefined, days: number = 7): UseTideDa
 
   useEffect(() => {
     fetchData();
-  }, [city?.id, days]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [city?.id, days, startDate?.toDateString()]);
 
   return {
     forecast,

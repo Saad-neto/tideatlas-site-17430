@@ -1,4 +1,5 @@
 import { useParams, Navigate } from 'react-router-dom';
+import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import AdSpace from '@/components/layout/AdSpace';
@@ -16,25 +17,34 @@ import { Button } from '@/components/ui/button';
 
 const CityTides = () => {
   const { citySlug } = useParams<{ citySlug: string }>();
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   // Busca a cidade pelo slug
   const city = citySlug ? getCityBySlug(citySlug) : undefined;
 
   // Busca dados de marés
-  const { forecast, isLoading, error, isCached, refetch } = useTideData(city, 7);
+  const { forecast, isLoading, error, isCached, refetch } = useTideData(city, 7, selectedDate);
 
   // Se a cidade não existir, redireciona para 404
   if (!city) {
     return <Navigate to="/404" replace />;
   }
 
-  // Pega os eventos de maré do dia atual
-  const todayTides = forecast?.days[0]?.events || [];
+  // Pega os eventos de maré do dia selecionado
+  // Como passamos startDate para useTideData, o primeiro dia do forecast
+  // SEMPRE será a data selecionada
+  const displayTides = forecast?.days[0]?.events || [];
+  const selectedDayData = forecast?.days[0];
 
   return (
     <div className="min-h-screen bg-background">
       <SEO city={city} />
-      <Header cityName={city.name} cityState={city.stateCode} />
+      <Header
+        cityName={city.name}
+        cityState={city.stateCode}
+        selectedDate={selectedDate}
+        onDateChange={setSelectedDate}
+      />
 
       <main className="container mx-auto px-4 py-6 sm:py-8">
         <AdSpace position="top" />
@@ -66,8 +76,8 @@ const CityTides = () => {
         </div>
 
         <TideGrid
-          tides={todayTides}
-          date={forecast?.days[0]?.date}
+          tides={displayTides}
+          date={selectedDayData?.date}
           isLoading={isLoading}
           error={error}
         />

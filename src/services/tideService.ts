@@ -20,8 +20,9 @@ class TideService {
   /**
    * Busca dados de marés para uma cidade e período
    */
-  async getTideForecast(city: City, days: number = 7): Promise<TideApiResponse> {
-    const cacheKey = `${city.id}-${days}`;
+  async getTideForecast(city: City, days: number = 7, startDate?: Date): Promise<TideApiResponse> {
+    const dateKey = startDate ? startDate.toISOString().split('T')[0] : 'today';
+    const cacheKey = `${city.id}-${days}-${dateKey}`;
 
     // Verifica cache
     const cached = this.cache.get(cacheKey);
@@ -43,20 +44,20 @@ class TideService {
 
       switch (this.config.provider) {
         case 'mock':
-          forecast = this.generateMockData(city, days);
+          forecast = this.generateMockData(city, days, startDate);
           break;
 
         // Pronto para APIs reais
         case 'stormglass':
-          forecast = await this.fetchFromStormglass(city, days);
+          forecast = await this.fetchFromStormglass(city, days, startDate);
           break;
 
         case 'worldtides':
-          forecast = await this.fetchFromWorldTides(city, days);
+          forecast = await this.fetchFromWorldTides(city, days, startDate);
           break;
 
         default:
-          forecast = this.generateMockData(city, days);
+          forecast = this.generateMockData(city, days, startDate);
       }
 
       // Salva no cache
@@ -82,9 +83,9 @@ class TideService {
   /**
    * Gera dados mockados realistas baseados na localização
    */
-  private generateMockData(city: City, days: number): TideForecast {
+  private generateMockData(city: City, days: number, startDate?: Date): TideForecast {
     const dailyTides: DailyTide[] = [];
-    const now = new Date();
+    const now = startDate ? new Date(startDate) : new Date();
     now.setHours(0, 0, 0, 0);
 
     // Fator de variação baseado na latitude (marés variam por região)
@@ -155,16 +156,16 @@ class TideService {
    * Integração com Stormglass API
    * Documentação: https://docs.stormglass.io/#/tide
    */
-  private async fetchFromStormglass(city: City, days: number): Promise<TideForecast> {
+  private async fetchFromStormglass(city: City, days: number, startDate?: Date): Promise<TideForecast> {
     const apiKey = this.config.apiKey;
 
     if (!apiKey) {
       console.warn('Stormglass API key não configurada. Usando dados mockados.');
-      return this.generateMockData(city, days);
+      return this.generateMockData(city, days, startDate);
     }
 
     try {
-      const start = new Date();
+      const start = startDate ? new Date(startDate) : new Date();
       start.setHours(0, 0, 0, 0);
       const end = new Date(start);
       end.setDate(end.getDate() + days);
@@ -243,16 +244,16 @@ class TideService {
    * Integração com WorldTides API
    * Documentação: https://www.worldtides.info/apidocs
    */
-  private async fetchFromWorldTides(city: City, days: number): Promise<TideForecast> {
+  private async fetchFromWorldTides(city: City, days: number, startDate?: Date): Promise<TideForecast> {
     const apiKey = this.config.apiKey;
 
     if (!apiKey) {
       console.warn('WorldTides API key não configurada. Usando dados mockados.');
-      return this.generateMockData(city, days);
+      return this.generateMockData(city, days, startDate);
     }
 
     try {
-      const start = new Date();
+      const start = startDate ? new Date(startDate) : new Date();
       start.setHours(0, 0, 0, 0);
       const length = days * 86400; // segundos
 

@@ -1,6 +1,8 @@
-import { Waves, MapPin } from 'lucide-react';
+import { Waves, MapPin, Calendar as CalendarIcon } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { formatDate } from '@/lib/utils';
+import { formatDate, cn } from '@/lib/utils';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { cities } from '@/data/cities';
 import {
   Select,
@@ -9,13 +11,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 interface HeaderProps {
   cityName: string;
   cityState: string;
+  selectedDate?: Date;
+  onDateChange?: (date: Date) => void;
 }
 
-const Header = ({ cityName, cityState }: HeaderProps) => {
+const Header = ({ cityName, cityState, selectedDate, onDateChange }: HeaderProps) => {
   const currentDate = formatDate();
   const navigate = useNavigate();
 
@@ -29,6 +40,8 @@ const Header = ({ cityName, cityState }: HeaderProps) => {
       navigate(`/tabuada-mares/${selectedCity.slug}`);
     }
   };
+
+  const displayDate = selectedDate || new Date();
 
   return (
     <header className="sticky top-0 z-50 bg-card border-b border-border shadow-sm">
@@ -54,7 +67,7 @@ const Header = ({ cityName, cityState }: HeaderProps) => {
                 Sobre
               </Link>
             </nav>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-wrap">
               <MapPin className="w-5 h-5 text-primary hidden sm:block" />
               <Select value={currentCity?.id} onValueChange={handleCityChange}>
                 <SelectTrigger className="w-[180px] sm:w-[200px]">
@@ -68,7 +81,41 @@ const Header = ({ cityName, cityState }: HeaderProps) => {
                   ))}
                 </SelectContent>
               </Select>
+
+              {onDateChange && (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-[180px] sm:w-[200px] justify-start text-left font-normal",
+                        !selectedDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {format(displayDate, "PP", { locale: ptBR })}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="end">
+                    <Calendar
+                      mode="single"
+                      selected={displayDate}
+                      onSelect={(date) => date && onDateChange(date)}
+                      initialFocus
+                      locale={ptBR}
+                      disabled={(date) => {
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+                        const maxDate = new Date();
+                        maxDate.setDate(maxDate.getDate() + 7);
+                        return date < today || date > maxDate;
+                      }}
+                    />
+                  </PopoverContent>
+                </Popover>
+              )}
             </div>
+
             <div className="hidden lg:block text-right">
               <p className="text-sm text-muted-foreground capitalize">
                 {currentDate}
