@@ -1,5 +1,5 @@
 import { useParams, Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import AdSpace from '@/components/layout/AdSpace';
@@ -12,6 +12,7 @@ import MoonPhase from '@/components/moon/MoonPhase';
 import LunarCalendar from '@/components/moon/LunarCalendar';
 import { getCityBySlug } from '@/data/cities';
 import { useTideData } from '@/hooks/useTideData';
+import { analytics } from '@/hooks/useAnalytics';
 import { RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -21,6 +22,27 @@ const CityTides = () => {
 
   // Busca a cidade pelo slug
   const city = citySlug ? getCityBySlug(citySlug) : undefined;
+
+  // Rastreia visualização da cidade
+  useEffect(() => {
+    if (city) {
+      analytics.trackCityChange(city.name, city.stateCode);
+    }
+  }, [city?.id]);
+
+  // Handler para mudança de data com analytics
+  const handleDateChange = (date: Date) => {
+    setSelectedDate(date);
+    analytics.trackDateChange(date);
+  };
+
+  // Handler para refresh com analytics
+  const handleRefresh = () => {
+    if (city) {
+      analytics.trackRefresh(city.name);
+    }
+    refetch();
+  };
 
   // Busca dados de marés
   const { forecast, isLoading, error, isCached, refetch } = useTideData(city, 7, selectedDate);
@@ -43,7 +65,7 @@ const CityTides = () => {
         cityName={city.name}
         cityState={city.stateCode}
         selectedDate={selectedDate}
-        onDateChange={setSelectedDate}
+        onDateChange={handleDateChange}
       />
 
       <main className="container mx-auto px-4 py-6 sm:py-8">
@@ -66,7 +88,7 @@ const CityTides = () => {
           <Button
             variant="outline"
             size="sm"
-            onClick={refetch}
+            onClick={handleRefresh}
             disabled={isLoading}
             className="self-start sm:self-auto"
           >
