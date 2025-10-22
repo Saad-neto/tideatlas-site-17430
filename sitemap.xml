@@ -21,7 +21,14 @@
 
   <url>
     <loc>https://tabuademare.site/politica-de-privacidade</loc>
-    <lastmod>2025-10-17</lastmod>
+    <lastmod>2025-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://tabuademare.site/termos-de-uso</loc>
+    <lastmod>2025-10-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
