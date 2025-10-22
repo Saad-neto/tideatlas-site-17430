@@ -82,6 +82,15 @@ const CityTides = () => {
           error={error}
         />
 
+        {/* Disclaimer */}
+        <div className="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-500 rounded">
+          <p className="text-xs sm:text-sm text-yellow-800 dark:text-yellow-200">
+            <strong>⚠️ Aviso:</strong> As informações de marés são para fins informativos e educacionais.
+            Não devem ser usadas para navegação marítima ou atividades que envolvam segurança.
+            Consulte fontes oficiais para dados precisos.
+          </p>
+        </div>
+
         {/* Fase da Lua */}
         <div className="mt-6">
           <MoonPhase />

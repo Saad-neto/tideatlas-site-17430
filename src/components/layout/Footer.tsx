@@ -45,21 +45,39 @@ const Footer = () => {
           {/* Informações */}
           <div>
             <h4 className="text-md font-semibold text-foreground mb-4">
-              Sobre
+              Informações Legais
             </h4>
-            <p className="text-sm text-muted-foreground mb-2">
+            <p className="text-sm text-muted-foreground mb-4">
               Informações precisas de tábua de marés para turistas e
               moradores das principais cidades litorâneas do Brasil.
             </p>
-            <div className="mt-4">
-              <Link
-                to="/politica-de-privacidade"
-                className="text-sm text-muted-foreground hover:text-primary transition-colors inline-block mb-2"
-              >
-                Política de Privacidade
-              </Link>
-            </div>
-            <p className="text-xs text-muted-foreground mt-4">
+            <ul className="space-y-2">
+              <li>
+                <Link
+                  to="/sobre"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Sobre Nós
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/politica-de-privacidade"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Política de Privacidade
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/termos-de-uso"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Termos de Uso
+                </Link>
+              </li>
+            </ul>
+            <p className="text-xs text-muted-foreground mt-6">
               © {currentYear} Tábua de Marés. Todos os direitos reservados.
             </p>
           </div>

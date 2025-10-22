@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import CityTides from "./pages/CityTides";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import About from "./pages/About";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
             {/* Páginas estáticas */}
             <Route path="/sobre" element={<About />} />
             <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
+            <Route path="/termos-de-uso" element={<TermsOfService />} />
 
             {/* Página 404 */}
             <Route path="/404" element={<NotFound />} />
